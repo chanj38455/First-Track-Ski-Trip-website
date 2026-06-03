@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — First Track Ski Progression Trips</title>
+  <meta name="description" content="Get in touch with First Track to enquire about school ski trips, progression weeks, or our pre-trip preparation partnership with Skieasy. Based in London." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .contact-intro {
+      background: var(--grey-light);
+      padding: 64px 0;
+    }
+
+    .contact-intro-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .contact-who-for {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .who-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #dde2e8;
+    }
+
+    .who-item:first-child { padding-top: 0; }
+    .who-item:last-child { border-bottom: none; }
+
+    .who-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .who-text h4 {
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+    }
+
+    .who-text p {
+      font-size: 0.85rem;
+      color: var(--grey-text);
+      line-height: 1.6;
+    }
+
+    /* Response time note */
+    .response-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(201, 168, 76, 0.15);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.82rem;
+      color: #7a6020;
+      font-weight: 500;
+      margin-top: 1.25rem;
+    }
+
+    /* Topic select styling */
+    .enquiry-type-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .enquiry-type-btn {
+      display: block;
+      width: 100%;
+      padding: 0.75rem 0.6rem;
+      border: 1.5px solid #d0d8e0;
+      border-radius: var(--radius);
+      background: var(--white);
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--grey-text);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .enquiry-type-btn:hover {
+      border-color: var(--navy-mid);
+      color: var(--navy);
+      background: var(--ice);
+    }
+
+    .enquiry-type-btn.selected {
+      border-color: var(--navy);
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .enquiry-type-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* Info panel (alternative to form) */
+    .info-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+    }
+
+    .info-card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+
+    .info-card-content {}
+    .info-card-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--grey-text);
+      margin-bottom: 0.3rem;
+    }
+
+    .info-card-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .info-card-value a {
+      color: var(--navy-mid);
+      transition: color 0.2s;
+    }
+
+    .info-card-value a:hover { color: var(--gold); }
+
+    .info-card-note {
+      font-size: 0.82rem;
+      color: var(--grey-text);
+      margin-top: 0.2rem;
+    }
+
+    /* Founder card */
+    .founder-contact-card {
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      border-radius: 12px;
+      padding: 2rem;
+      color: var(--white);
+      margin-top: 1.25rem;
+    }
+
+    .founder-contact-card h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .founder-contact-name {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .founder-contact-role {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 1.25rem;
+    }
+
+    .founder-contact-card p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+    }
+
+    /* FAQ section */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #e0e5eb;
+      padding: 1.25rem 0;
+    }
+
+    .faq-item:first-child { padding-top: 0; }
+
+    .faq-question {
+      font-family: var(--sans);
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.6rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .faq-toggle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      color: var(--navy);
+      font-weight: 700;
+      margin-top: 0.05rem;
+    }
+
+    .faq-answer {
+      font-size: 0.9rem;
+      color: var(--grey-text);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .contact-intro-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .enquiry-type-row { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .enquiry-type-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">First <span>Track</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="trips.html">Our Trips</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="contact.html" class="nav-cta active">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="trips.html">Our Trips</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="contact.html" class="active">Get in Touch</a>
+    </div>
+  </nav>
+
+  <!-- ==================== PAGE HERO ==================== -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="section-label">Contact First Track</span>
+      <h1>Let's start planning your trip</h1>
+      <p>Whether you're a school planner, a parent booking for your teenager, or an adult ready to take your indoor skiing to the Alps — get in touch and we'll find the right programme for you.</p>
+    </div>
+  </div>
+
+  <!-- ==================== WHO SHOULD CONTACT US ==================== -->
+  <section class="contact-intro">
+    <div class="container">
+      <div class="contact-intro-inner">
+        <div>
+          <span class="section-label">Who we hear from</span>
+          <h2 style="font-size: clamp(1.5rem, 2.5vw, 2rem); color: var(--navy); margin-bottom: 1.5rem;">We're the right contact if you are...</h2>
+          <div class="contact-who-for">
+            <div class="who-item">
+              <div class="who-icon">🏫</div>
+              <div class="who-text">
+                <h4>A school trip coordinator</h4>
+                <p>Planning a ski trip for your year group, seeking compliance documentation, or wanting a sample itinerary and indicative quote for a school in the UK or internationally.</p>
+              </div>
+            </div>
+            <div class="who-item">
+              <div class="who-icon">👨‍👩‍👧</div>
+              <div class="who-text">
+                <h4>A parent or guardian</h4>
+                <p>Looking for a structured, well-supervised progression week for your teenager — or exploring the Skieasy + Alps pathway for a young skier who trains in London.</p>
+              </div>
+            </div>
+            <div class="who-item">
+              <div class="who-icon">🧍</div>
+              <div class="who-text">
+                <h4>An adult learner or improver</h4>
+                <p>Ready to take your skiing to the mountains — whether you've trained indoors at Skieasy or are a returning adult skier looking for a purposeful, coached group week.</p>
+              </div>
+            </div>
+            <div class="who-item">
+              <div class="who-icon">🤝</div>
+              <div class="who-text">
+                <h4>A potential partner or collaborator</h4>
+                <p>A lodge, ski school, instructor training provider, or related business interested in working with First Track for the 2026/27 season and beyond.</p>
+              </div>
+            </div>
+          </div>
+          <div class="response-note">
+            ⏱ We aim to respond to all enquiries within 1–2 working days.
+          </div>
+        </div>
+        <div>
+          <span class="section-label">Contact details</span>
+          <div class="info-cards">
+            <div class="info-card">
+              <div class="info-card-icon">✉️</div>
+              <div class="info-card-content">
+                <div class="info-card-label">Email</div>
+                <div class="info-card-value"><a href="mailto:chanj38455@gmail.com">chanj38455@gmail.com</a></div>
+                <div class="info-card-note">Best for detailed enquiries, school requirements, and quote requests</div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">📱</div>
+              <div class="info-card-content">
+                <div class="info-card-label">Phone &amp; WhatsApp</div>
+                <div class="info-card-value"><a href="tel:+447709232079">+44 7709 232079</a></div>
+                <div class="info-card-note">Available for calls and WhatsApp — UK hours</div>
+              </div>
+            </div>
+            <div class="info-card">
+              <div class="info-card-icon">📍</div>
+              <div class="info-card-content">
+                <div class="info-card-label">Based in</div>
+                <div class="info-card-value">London, United Kingdom</div>
+                <div class="info-card-note">Meetings can be arranged in London. Targeting winter 2026/27 launch.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="founder-contact-card">
+            <h4>Direct contact</h4>
+            <div class="founder-contact-name">Jacky Sung Kit Chan</div>
+            <div class="founder-contact-role">Founder &amp; Director, First Track</div>
+            <p>All initial enquiries are handled personally by Jacky. You'll speak directly with the person who knows the programmes, the partners, and the itineraries — not a sales team.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT FORM ==================== -->
+  <section class="contact-section" style="padding: 96px 0;">
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <span class="section-label">Send an Enquiry</span>
+          <h2 style="font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--navy); margin-bottom: 0.5rem;">Tell us about your group</h2>
+          <p style="color: var(--grey-text); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.7;">The more detail you share, the more useful our response. We'll typically come back with an outline of suitable options, indicative pricing, and next steps.</p>
+
+          <form onsubmit="handleSubmit(event)">
+            <span class="enquiry-type-label">What are you enquiring about?</span>
+            <div class="enquiry-type-row">
+              <button type="button" class="enquiry-type-btn" onclick="selectType(this)">🏫 School trip</button>
+              <button type="button" class="enquiry-type-btn" onclick="selectType(this)">🎿 Progression trip</button>
+              <button type="button" class="enquiry-type-btn" onclick="selectType(this)">🤝 Partnership</button>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Your first name" required />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Your last name" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone number (optional)</label>
+              <input type="tel" id="phone" name="phone" placeholder="+44 ..." />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="organisation">School or organisation (if applicable)</label>
+                <input type="text" id="organisation" name="organisation" placeholder="e.g. St. Mary's School, London" />
+              </div>
+              <div class="form-group">
+                <label for="groupSize">Approximate group size</label>
+                <select id="groupSize" name="groupSize">
+                  <option value="">Select size...</option>
+                  <option>1–5 participants</option>
+                  <option>6–15 participants</option>
+                  <option>16–30 participants</option>
+                  <option>30–60 participants</option>
+                  <option>60+ participants</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="timing">When are you thinking of travelling?</label>
+                <select id="timing" name="timing">
+                  <option value="">Select timing...</option>
+                  <option>December 2026</option>
+                  <option>January 2027</option>
+                  <option>February 2027</option>
+                  <option>March 2027</option>
+                  <option>April 2027</option>
+                  <option>Not yet decided</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="destination">Preferred destination</label>
+                <select id="destination" name="destination">
+                  <option value="">No preference yet</option>
+                  <option>Gstaad, Switzerland (premium)</option>
+                  <option>French Alps</option>
+                  <option>Austrian Tirol</option>
+                  <option>Aosta Valley, Italy</option>
+                  <option>Flexible — advise me</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Tell us more about your group and what you're looking for</label>
+              <textarea id="message" name="message" placeholder="e.g. We're a Year 9 group of 28 pupils, mixed ability, looking for a 5-night programme with full instruction. We'd like pre-trip prep sessions too..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">Send Enquiry →</button>
+          </form>
+
+          <p style="font-size: 0.78rem; color: var(--grey-text); margin-top: 1rem; text-align: center;">
+            Your details are used only to respond to this enquiry. We don't share or sell personal information.
+          </p>
+        </div>
+
+        <div>
+          <span class="section-label">What happens next</span>
+          <h2 style="font-size: 1.5rem; color: var(--navy); margin-bottom: 2rem;">Our enquiry process</h2>
+
+          <div class="values-list">
+            <div class="value-item">
+              <div class="value-num">1</div>
+              <div class="value-text">
+                <h3>We read your enquiry</h3>
+                <p>Every enquiry comes to Jacky directly. We take the time to understand what you need before responding — no automated replies or template emails.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-num">2</div>
+              <div class="value-text">
+                <h3>We suggest the right programme</h3>
+                <p>Within 1–2 working days, we'll come back with a recommendation — which trip type, which destination, and a rough indication of what it might cost.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-num">3</div>
+              <div class="value-text">
+                <h3>We build a costed proposal</h3>
+                <p>If the initial suggestion fits, we'll put together a detailed, itemised quote — including everything from instruction and accommodation to transfers and evening activities.</p>
+              </div>
+            </div>
+            <div class="value-item">
+              <div class="value-num">4</div>
+              <div class="value-text">
+                <h3>You book with confidence</h3>
+                <p>All bookings include full financial protection (ABTA/ATOL), compliance documentation for schools, and a dedicated point of contact throughout the planning process.</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2.5rem; background: var(--grey-light); border-radius: 10px; padding: 1.75rem;">
+            <h3 style="font-size: 1rem; color: var(--navy); margin-bottom: 1rem; font-family: var(--sans); font-weight: 700;">Not ready to commit? That's fine.</h3>
+            <p style="font-size: 0.9rem; color: var(--grey-text); line-height: 1.65; margin-bottom: 1.25rem;">You can also just send a short message or call — we're happy to have an informal conversation about whether First Track is right for your group before any paperwork or commitment.</p>
+            <a href="tel:+447709232079" class="btn btn-navy" style="font-size: 0.875rem; padding: 0.75rem 1.25rem;">📱 Call Jacky: +44 7709 232079</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section class="cards-section" style="background: var(--grey-light);">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Before You Enquire</span>
+        <h2>Common questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">
+            Do you need a website to book, or is this enough?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">This is the website. We're at an early stage — you're looking at the live site. Everything you need to start a conversation or make an enquiry is here. We'll provide full documentation, sample itineraries, and compliance paperwork directly when you get in touch.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            What does it cost, roughly?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">UK school ski trips typically run £1,000–£1,500 per pupil for a week in Europe, with Switzerland (Gstaad) at the upper end and France/Austria/Italy offering lower price points. Progression trips are priced per person. All quotes are all-inclusive and itemised. Get in touch for a specific figure for your group.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            How does the Skieasy + Alps package work?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">We can bundle a block of Skieasy indoor sessions (London, Chiswick) into your First Track quote. Participants complete their prep sessions before the trip, then travel to the Alps already able to stop and turn. The exact number of sessions depends on ability level — typically 3–6 sessions for complete beginners.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Are you ABTA and ATOL bonded?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">First Track is operating as a managed branch under an established ABTA member operator — which means full Package Travel Regulations compliance and ATOL cover for flight-inclusive packages, without the day-one bonding costs of independent membership. Full documentation is available on request.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Do you have the LOtC Quality Badge?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">Our STF membership and LOtC Quality Badge application is in progress for the 2026/27 season. The LOtC Badge (awarded by the School Travel Forum) confirms our H&S systems have been independently audited, removing the need for schools to re-audit us. We're targeting completion before our first school booking.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            Can you cater for different ability levels in the same group?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">Yes — all our instruction partners ability-band groups so complete beginners and confident intermediate skiers can be on the same trip and still receive instruction pitched at exactly their level. We'll ask about the ability spread in your group as part of the planning process.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            What's the minimum group size?
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">Minimum group sizes vary by partner and destination. For Lovell Camp in Gstaad, this is something we confirm directly during the enquiry process. Progression trip individuals can often join a combined group — get in touch and we'll find the right arrangement.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="cta-banner">
+    <div class="container">
+      <span class="section-label">Let's Talk</span>
+      <h2>Ready when you are</h2>
+      <p>No pressure, no commitment. Just a conversation about whether First Track is the right fit for your group.</p>
+      <div class="cta-actions">
+        <a href="mailto:chanj38455@gmail.com" class="btn btn-primary">✉ Email Jacky</a>
+        <a href="tel:+447709232079" class="btn btn-outline">📱 +44 7709 232079</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">First <span>Track</span></a>
+          <p>UK-based specialist organiser of ski progression trips for schools, youth groups, and adult learners across the Alps.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="trips.html">Our Trips</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Our Trips</h4>
+          <ul>
+            <li><a href="trips.html#school">School Ski Trips</a></li>
+            <li><a href="trips.html#progression">Progression Trips</a></li>
+            <li><a href="trips.html#teens">Youth &amp; Teen Weeks</a></li>
+            <li><a href="trips.html#adults">Adult Programmes</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:chanj38455@gmail.com">chanj38455@gmail.com</a></li>
+            <li><a href="tel:+447709232079">+44 7709 232079</a></li>
+            <li><a href="#">London, UK</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 First Track. Targeting launch: Winter 2026/27.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+
+    function selectType(btn) {
+      document.querySelectorAll('.enquiry-type-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('[type="submit"]');
+      btn.textContent = '✓ Enquiry sent — we\'ll be in touch within 1–2 working days';
+      btn.style.background = '#27ae60';
+      btn.disabled = true;
+    }
+  </script>
+
+</body>
+</html>

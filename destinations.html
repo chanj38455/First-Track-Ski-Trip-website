@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Destinations &amp; Partners — First Track Ski Progression</title>
+  <meta name="description" content="First Track's handpicked Alpine partners: Lovell Camp & Academy in Gstaad, Switzerland, and Skieasy in Chiswick, London — plus upcoming destinations across France, Austria, and Italy." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Destinations-specific styles */
+    .partner-intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .partner-overview-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.25s, box-shadow 0.25s;
+      text-decoration: none;
+    }
+
+    .partner-overview-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 56px rgba(13,27,42,0.18);
+    }
+
+    .partner-card-header {
+      padding: 2.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .partner-card-header.lovell {
+      background: linear-gradient(155deg, #1b3a5c 0%, #0d1b2a 100%);
+    }
+
+    .partner-card-header.skieasy {
+      background: linear-gradient(155deg, #1a3a2a 0%, #0a1f13 100%);
+    }
+
+    .partner-card-bg-icon {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 5rem;
+      opacity: 0.12;
+    }
+
+    .partner-card-header .destination-location { margin-bottom: 0.3rem; }
+    .partner-card-header h3 { font-size: 1.5rem; color: var(--white); }
+
+    .partner-card-body {
+      background: var(--white);
+      padding: 1.5rem 2rem;
+      flex: 1;
+    }
+
+    .partner-card-body p {
+      font-size: 0.9rem;
+      color: var(--grey-text);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .partner-card-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy-mid);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* How each partner fits */
+    .role-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .role-card {
+      background: var(--grey-light);
+      border-radius: 8px;
+      padding: 1.5rem;
+      border-left: 4px solid var(--gold);
+    }
+
+    .role-card h4 {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .role-card p {
+      font-size: 0.88rem;
+      color: var(--grey-text);
+      line-height: 1.65;
+    }
+
+    /* Future partners */
+    .future-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .future-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px dashed #d0d8e0;
+      padding: 1.75rem;
+      position: relative;
+    }
+
+    .future-badge {
+      display: inline-block;
+      background: var(--ice);
+      color: var(--navy-mid);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    .future-card h3 { font-size: 1.05rem; color: var(--navy); margin-bottom: 0.4rem; }
+    .future-card .destination-location { margin-bottom: 0.75rem; font-size: 0.78rem; }
+    .future-card p { font-size: 0.87rem; color: var(--grey-text); line-height: 1.65; }
+
+    /* Partner detail deep-dive */
+    .partner-facts-extended {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .stat-box {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 1.25rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-box-num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-box-label {
+      font-size: 0.78rem;
+      color: var(--grey-text);
+      font-weight: 500;
+    }
+
+    /* Programme pills */
+    .programme-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.25rem;
+    }
+
+    .programme-pill {
+      background: var(--navy);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+    }
+
+    /* Activities list */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: 1rem;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .activity-item::before {
+      content: '◆';
+      color: var(--gold);
+      font-size: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .partner-intro-grid { grid-template-columns: 1fr; }
+      .role-grid { grid-template-columns: 1fr; }
+      .future-grid { grid-template-columns: 1fr; }
+      .partner-facts-extended { grid-template-columns: repeat(2, 1fr); }
+      .activities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">First <span>Track</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="trips.html">Our Trips</a></li>
+        <li><a href="destinations.html" class="active">Destinations</a></li>
+        <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="trips.html">Our Trips</a>
+      <a href="destinations.html" class="active">Destinations</a>
+      <a href="contact.html">Get in Touch</a>
+    </div>
+  </nav>
+
+  <!-- ==================== PAGE HERO ==================== -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="section-label">Destinations &amp; Partners</span>
+      <h1>Handpicked partners. World-class destinations.</h1>
+      <p>We don't just sell destinations — we build partnerships with venues and instruction providers who share our commitment to structured progression. Every partner we work with meets our standard, not just a minimum bar.</p>
+    </div>
+  </div>
+
+  <!-- ==================== PARTNER OVERVIEW ==================== -->
+  <section class="intro-section">
+    <div class="container">
+      <div class="section-header" style="text-align: left; margin-bottom: 2.5rem;">
+        <span class="section-label">Our Current Partners</span>
+        <h2>Two anchor partners — Alpine and London</h2>
+        <p style="max-width: 640px;">First Track launches with two key partners: an on-mountain lodge and instruction provider in the Swiss Alps, and an indoor ski school in London that feeds motivated, pre-prepared participants into our Alpine programmes.</p>
+      </div>
+
+      <div class="partner-intro-grid">
+        <a href="#lovell" class="partner-overview-card">
+          <div class="partner-card-header lovell">
+            <span class="partner-card-bg-icon">🏔️</span>
+            <div class="destination-location">Gstaad · Switzerland</div>
+            <h3>Lovell Camp &amp; Academy</h3>
+          </div>
+          <div class="partner-card-body">
+            <p>Our flagship Alpine partner — an 18-room mountain lodge sleeping ~70 guests in Schönried, three minutes from the slopes, with up to 5 hours of structured instruction per day.</p>
+            <span class="partner-card-link">Full profile ↓</span>
+          </div>
+        </a>
+        <a href="#skieasy" class="partner-overview-card">
+          <div class="partner-card-header skieasy">
+            <span class="partner-card-bg-icon">🎿</span>
+            <div class="destination-location">Chiswick · London</div>
+            <h3>Skieasy at Dukes Meadows</h3>
+          </div>
+          <div class="partner-card-body">
+            <p>London's specialist indoor ski school on a revolving treadmill — year-round, 1:1 coaching that builds the technique foundations participants bring to the Alps.</p>
+            <span class="partner-card-link">Full profile ↓</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- How they fit together -->
+      <div style="background: var(--grey-light); border-radius: 12px; padding: 2rem 2.5rem;">
+        <h3 style="font-size: 1.1rem; color: var(--navy); margin-bottom: 0.5rem; font-family: var(--sans); font-weight: 700;">How these two partners work together</h3>
+        <p style="color: var(--grey-text); font-size: 0.92rem; margin-bottom: 1.5rem; max-width: 720px;">The First Track model uses Skieasy as a preparation layer and Lovell (or future Alpine partners) as the delivery layer. This combination is what makes our trips genuinely different — participants don't waste their first two days on snow learning to stop.</p>
+        <div class="role-grid">
+          <div class="role-card">
+            <h4>Skieasy → Before the trip</h4>
+            <p>Participants train in London — on a revolving ski treadmill — building muscle memory and technique before they ever step on a chair lift. They arrive in the Alps already able to stop and turn.</p>
+          </div>
+          <div class="role-card">
+            <h4>Lovell → During the trip</h4>
+            <p>Better-prepared participants progress faster in the Alps. Instructors spend less time on basics and more time on technique refinement. Everyone improves more in the same week.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== LOVELL CAMP ==================== -->
+  <section class="partner-section" id="lovell" style="scroll-margin-top: 80px;">
+    <div class="container">
+      <div class="partner-grid">
+        <div class="partner-info">
+          <div class="partner-badge">🏔️ Alpine Partner</div>
+          <h2>Lovell Camp &amp; Academy</h2>
+          <p class="partner-location">📍 Schönried / Gstaad, Switzerland</p>
+          <p>
+            Lovell Camp &amp; Academy is a second-generation, family-run mountain lodge and ski school in Schönried, near Gstaad, Switzerland — owned and operated by Bryce and Victoria Lovell, formerly directors of the John F. Kennedy International School in Saanen. Their deep roots in education and alpine instruction make them a natural fit for First Track's school and youth programmes.
+          </p>
+          <p>
+            The Mountain Lodge is an 18-room, en-suite facility sleeping approximately 70 guests, located just three minutes from the slopes with its own minibus fleet. This is not a generic hotel — it's a purpose-built group ski accommodation with everything on-site and structured around the daily rhythm of intensive on-snow learning.
+          </p>
+          <p>
+            Lovell already works with established UK operators like The Ski Company, so they understand and welcome the third-party organiser model. For First Track, they represent additional demand — a complementary channel, not a competing one.
+          </p>
+
+          <div class="partner-facts-extended">
+            <div class="stat-box">
+              <div class="stat-box-num">~70</div>
+              <div class="stat-box-label">Beds (18 en-suite rooms)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-num">5hrs</div>
+              <div class="stat-box-label">Max instruction per day</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-num">3 min</div>
+              <div class="stat-box-label">Walk to the slopes</div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 1rem; color: var(--navy); margin-top: 2rem; margin-bottom: 0.5rem; font-family: var(--sans); font-weight: 700;">Winter programmes offered</h3>
+          <div class="programme-pills">
+            <span class="programme-pill">1-week+ individual ski camp</span>
+            <span class="programme-pill">11-week Lovell Academy (schooling + ski)</span>
+            <span class="programme-pill">School &amp; group ski trips</span>
+          </div>
+
+          <h3 style="font-size: 1rem; color: var(--navy); margin-top: 1.75rem; margin-bottom: 0.5rem; font-family: var(--sans); font-weight: 700;">Après-ski activities included</h3>
+          <div class="activities-grid">
+            <div class="activity-item">Swimming</div>
+            <div class="activity-item">Ice skating</div>
+            <div class="activity-item">Indoor climbing</div>
+            <div class="activity-item">Language lessons</div>
+            <div class="activity-item">Evening programme</div>
+            <div class="activity-item">Alpine excursions</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="partner-visual lovell">
+            <div class="partner-visual-overlay">🏔️</div>
+            <div class="partner-visual-caption">
+              <p>"We encourage schools to work with us to create a ski trip which fits into their program and budget." — Lovell Camp &amp; Academy</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <div class="partner-facts">
+              <div class="partner-fact">
+                <div class="partner-fact-label">Season</div>
+                <div class="partner-fact-value">Mid-December to early April</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Specialises in</div>
+                <div class="partner-fact-value">Children aged ~4/5–15</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Instruction ratio</div>
+                <div class="partner-fact-value">Up to 1:7</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Transport</div>
+                <div class="partner-fact-value">Own minibus fleet</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Airport</div>
+                <div class="partner-fact-value">Geneva (transfers arranged)</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Position</div>
+                <div class="partner-fact-value">Premium / flagship</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; background: linear-gradient(135deg, var(--navy), var(--navy-mid)); border-radius: 10px; padding: 1.5rem;">
+              <p style="font-size: 0.82rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 0.5rem;">Why we chose Lovell</p>
+              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.65; margin-bottom: 0;">Education-rooted ownership, purpose-built group accommodation, an established relationship with UK school operators, and a location in the Gstaad region — one of Europe's premier family ski destinations — make Lovell the natural flagship for First Track's school programme.</p>
+            </div>
+
+            <a href="contact.html" class="btn btn-navy" style="margin-top: 1.25rem; display: block; text-align: center;">Enquire about Lovell trips →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SKIEASY ==================== -->
+  <section class="partner-section" id="skieasy" style="scroll-margin-top: 80px;">
+    <div class="container">
+      <div class="partner-grid reverse">
+        <div class="partner-info">
+          <div class="partner-badge">🎿 London Prep Partner</div>
+          <h2>Skieasy at Dukes Meadows</h2>
+          <p class="partner-location">📍 Chiswick, London W4</p>
+          <p>
+            Skieasy is London's specialist indoor ski school — based at Dukes Meadows Golf &amp; Tennis in Chiswick — offering 1:1 ski instruction on a revolving ski treadmill. Year-round, weatherproof, and proven to accelerate technique, it's the most efficient way to build real skiing foundations before a trip to the Alps.
+          </p>
+          <p>
+            For First Track, Skieasy plays two distinct roles: as a pre-trip preparation partner for school groups and individual bookers, and as a source of motivated adult and youth clients who have already committed to improving their skiing and are ready for the next step on real snow.
+          </p>
+          <p>
+            Skieasy's client base is self-selecting — people who choose to ski on a treadmill in west London are exactly the kind of motivated learners First Track programmes are designed for. Our partnership creates a natural progression pathway: train in London, ski in the Alps.
+          </p>
+
+          <div class="partner-facts-extended">
+            <div class="stat-box">
+              <div class="stat-box-num">1:1</div>
+              <div class="stat-box-label">Instruction ratio (or 1:2 with a friend)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-num">8×</div>
+              <div class="stat-box-label">Claimed learning speed vs. slope lessons</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-num">Year</div>
+              <div class="stat-box-label">Round availability — rain or shine</div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 1rem; color: var(--navy); margin-top: 2rem; margin-bottom: 0.75rem; font-family: var(--sans); font-weight: 700;">What makes Skieasy different</h3>
+          <div class="included-list" style="display: flex; flex-direction: column; gap: 0;">
+            <div class="included-item">
+              <div class="included-icon green" style="background: #1a3a2a;">🔄</div>
+              <div class="included-text">
+                <h4>Revolving ski treadmill</h4>
+                <p>A continuous moving slope — like a treadmill for skiing — that lets instructors control speed and gradient, focusing on exactly the technique the skier needs to develop.</p>
+              </div>
+            </div>
+            <div class="included-item">
+              <div class="included-icon green" style="background: #1a3a2a;">🪞</div>
+              <div class="included-text">
+                <h4>Mirrored walls for self-analysis</h4>
+                <p>Skiers can watch their own technique in real time — a powerful tool for correcting posture, weight distribution, and edge control that slope lessons can't replicate.</p>
+              </div>
+            </div>
+            <div class="included-item">
+              <div class="included-icon green" style="background: #1a3a2a;">☁️</div>
+              <div class="included-text">
+                <h4>Weatherproof, year-round</h4>
+                <p>No snow required. Beginners can start learning in July and arrive in the Alps in December already confident. Schools can book PE/games slots without weather dependency.</p>
+              </div>
+            </div>
+            <div class="included-item">
+              <div class="included-icon green" style="background: #1a3a2a;">👶</div>
+              <div class="included-text">
+                <h4>Ages from 4 (ski) and 7 (snowboard)</h4>
+                <p>Suitable for the youngest school groups — a realistic pre-trip preparation option even for primary school trips.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="partner-visual skieasy">
+            <div class="partner-visual-overlay">🎿</div>
+            <div class="partner-visual-caption">
+              <p>"Learn to ski up to 8 times faster than on traditional slopes." — Skieasy</p>
+            </div>
+          </div>
+
+          <div style="margin-top: 1.5rem;">
+            <div class="partner-facts">
+              <div class="partner-fact">
+                <div class="partner-fact-label">Location</div>
+                <div class="partner-fact-value">Dukes Meadows, Chiswick W4</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Lesson format</div>
+                <div class="partner-fact-value">30-minute sessions</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Off-peak price</div>
+                <div class="partner-fact-value">£80 / session (2025/26)</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Peak price</div>
+                <div class="partner-fact-value">£100 / session (2025/26)</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Min age</div>
+                <div class="partner-fact-value">4 (ski) / 7 (snowboard)</div>
+              </div>
+              <div class="partner-fact">
+                <div class="partner-fact-label">Role in First Track</div>
+                <div class="partner-fact-value">Pre-trip preparation</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.5rem; background: linear-gradient(135deg, #1a3a2a, #0a2018); border-radius: 10px; padding: 1.5rem;">
+              <p style="font-size: 0.82rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 0.5rem;">The First Track partnership</p>
+              <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.65; margin-bottom: 0;">School groups can book a block of Skieasy sessions bundled into their First Track quote. Individual bookers on progression trips can access a group prep rate. And Skieasy's existing clients get a direct, trusted pathway to take their indoor technique to the Alps.</p>
+            </div>
+
+            <a href="contact.html" class="btn btn-navy" style="margin-top: 1.25rem; display: block; text-align: center;">Enquire about pre-trip prep →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FUTURE PARTNERS ==================== -->
+  <section class="cards-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Growing the Network</span>
+        <h2>Future destinations — coming for 2026/27</h2>
+        <p>Lovell and Gstaad are our premium flagship option. We're actively developing additional destinations across France, Austria, and Italy to give schools and individuals more price points and terrain options.</p>
+      </div>
+      <div class="future-grid">
+        <div class="future-card">
+          <span class="future-badge">In discussion</span>
+          <div class="destination-location">France</div>
+          <h3>French Alps</h3>
+          <p>Lodge and instruction partners across the French Alps — including large-scale operations comparable to Les Elfes. France offers excellent value for price-sensitive school groups and a wide range of terrain for progression skiers.</p>
+        </div>
+        <div class="future-card">
+          <span class="future-badge">In discussion</span>
+          <div class="destination-location">Austria</div>
+          <h3>Austrian Resorts</h3>
+          <p>Austria's family-run ski hotels in the Tirol region offer a warm, relaxed alpine experience at lower price points than Switzerland. Ideal for first-time school trips and budget-conscious groups.</p>
+        </div>
+        <div class="future-card">
+          <span class="future-badge">In discussion</span>
+          <div class="destination-location">Italy</div>
+          <h3>Aosta Valley, Italy</h3>
+          <p>Interski-inspired Aosta Valley options — one of Europe's most accessible and affordable ski destinations, with excellent beginner and intermediate terrain. Our most budget-friendly destination offering.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2.5rem; background: var(--ice); border-radius: 10px; padding: 1.75rem 2rem; display: flex; align-items: flex-start; gap: 1.25rem;">
+        <div style="font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem;">💡</div>
+        <div>
+          <h4 style="font-size: 0.95rem; color: var(--navy); margin-bottom: 0.4rem; font-family: var(--sans); font-weight: 700;">Matching destination to budget and ambition</h4>
+          <p style="font-size: 0.9rem; color: var(--grey-text); line-height: 1.65; margin: 0;">Switzerland sits at the top of the UK price band — Gstaad is a premium experience. France and Austria offer excellent quality at a lower price point, and Italy is our most accessible entry level. We'll help you match the right destination to your group, budget, and ability level.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DESTINATION SELECTOR ==================== -->
+  <section class="cards-section white-bg tight">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Choosing a destination</span>
+        <h2>Which destination is right for your group?</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🇨🇭</div>
+          <h3>Gstaad, Switzerland</h3>
+          <p><strong>Best for:</strong> Schools seeking a premium experience, groups wanting all-in lodge+instruction, and any trip where quality and a trusted facility are the priority.</p>
+          <div class="destination-tags" style="margin-top: 1rem;">
+            <span class="tag">Premium</span>
+            <span class="tag">Lodge+Instruction</span>
+            <span class="tag">School Groups</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🇫🇷</div>
+          <h3>French Alps</h3>
+          <p><strong>Best for:</strong> Mid-range school trips, larger groups needing more beds, or progressive skiers who want access to extensive terrain and high-altitude skiing.</p>
+          <div class="destination-tags" style="margin-top: 1rem;">
+            <span class="tag">Mid-range</span>
+            <span class="tag">Large Groups</span>
+            <span class="tag">Extensive Terrain</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🇦🇹</div>
+          <h3>Austrian Tirol</h3>
+          <p><strong>Best for:</strong> First-time school trips, budget-conscious groups, and families who want a relaxed, welcoming alpine experience with reliable snow in December.</p>
+          <div class="destination-tags" style="margin-top: 1rem;">
+            <span class="tag">Budget-friendly</span>
+            <span class="tag">Beginners</span>
+            <span class="tag">Relaxed Atmosphere</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="cta-banner">
+    <div class="container">
+      <span class="section-label">Plan Your Trip</span>
+      <h2>Not sure which destination fits?</h2>
+      <p>Tell us about your group — school, age range, ability level, and budget — and we'll recommend the right destination and programme.</p>
+      <div class="cta-actions">
+        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        <a href="trips.html" class="btn btn-outline">View Our Trips</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">First <span>Track</span></a>
+          <p>UK-based specialist organiser of ski progression trips for schools, youth groups, and adult learners across the Alps.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="trips.html">Our Trips</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Our Partners</h4>
+          <ul>
+            <li><a href="#lovell">Lovell Camp &amp; Academy</a></li>
+            <li><a href="#skieasy">Skieasy at Dukes Meadows</a></li>
+            <li><a href="#future">French Alps (coming soon)</a></li>
+            <li><a href="#future">Austria (coming soon)</a></li>
+            <li><a href="#future">Italy (coming soon)</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:chanj38455@gmail.com">chanj38455@gmail.com</a></li>
+            <li><a href="tel:+447709232079">+44 7709 232079</a></li>
+            <li><a href="#">London, UK</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 First Track. Targeting launch: Winter 2026/27.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>

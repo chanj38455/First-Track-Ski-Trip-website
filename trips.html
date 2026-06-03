@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Trips — First Track Ski Progression</title>
+  <meta name="description" content="School ski trips and progression trips for teens and adults — fully managed, structured, and expertly delivered across the Alps by First Track." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Trips-specific styles */
+    .trips-overview {
+      background: var(--grey-light);
+      padding: 64px 0;
+    }
+
+    .trips-nav {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+
+    .trip-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .trip-tab.school {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .trip-tab.school:hover { background: var(--navy-mid); }
+
+    .trip-tab.progression {
+      background: #2d6a4f;
+      color: var(--white);
+    }
+    .trip-tab.progression:hover { background: #1a3a2a; }
+
+    /* Section anchors offset for fixed nav */
+    .anchor-offset {
+      scroll-margin-top: 90px;
+    }
+
+    /* Trip detail section */
+    .trip-detail {
+      padding: 96px 0;
+    }
+
+    .trip-detail.alt { background: var(--grey-light); }
+
+    .trip-detail-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid #e0e5eb;
+    }
+
+    .trip-detail-badge {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      margin-top: 0.25rem;
+    }
+
+    .badge-school { background: var(--navy); color: var(--gold); }
+    .badge-progression { background: #1a3a2a; color: #6fcf97; }
+    .badge-teen { background: #1a3a2a; color: #6fcf97; }
+    .badge-adult { background: #2c1a3a; color: #bb86fc; }
+
+    .trip-detail-title h2 {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: var(--navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .trip-detail-title p {
+      color: var(--grey-text);
+      font-size: 1.05rem;
+      max-width: 680px;
+      line-height: 1.7;
+    }
+
+    /* What's included grid */
+    .included-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .included-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .included-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e8ecf0;
+    }
+    .included-item:first-child { padding-top: 0; }
+    .included-item:last-child { border-bottom: none; }
+
+    .included-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .included-icon.green { background: #1a3a2a; }
+
+    .included-text h4 {
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 0.2rem;
+      font-family: var(--sans);
+    }
+
+    .included-text p {
+      font-size: 0.85rem;
+      color: var(--grey-text);
+      line-height: 1.6;
+    }
+
+    .trip-aside {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .aside-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
+    }
+
+    .trip-detail.alt .aside-card { background: var(--white); }
+
+    .aside-card h4 {
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 1rem;
+      font-family: var(--sans);
+      font-weight: 700;
+    }
+
+    .aside-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #f0f2f5;
+      font-size: 0.88rem;
+    }
+
+    .aside-stat-row:last-child { border-bottom: none; }
+    .aside-stat-label { color: var(--grey-text); }
+    .aside-stat-value { font-weight: 600; color: var(--navy); }
+
+    .aside-highlight {
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      border-radius: 10px;
+      padding: 1.75rem;
+      color: var(--white);
+    }
+
+    .aside-highlight h4 { color: var(--gold); margin-bottom: 0.75rem; font-family: var(--sans); font-size: 0.95rem; font-weight: 700; }
+    .aside-highlight p { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.65; margin-bottom: 1rem; }
+
+    /* Sub-trip panels */
+    .sub-trips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .sub-trip-card {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #e0e5eb;
+      background: var(--white);
+    }
+
+    .sub-trip-header {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .sub-trip-header.teens { background: linear-gradient(135deg, #1a3a2a, #0d2018); }
+    .sub-trip-header.adults { background: linear-gradient(135deg, #2c1a3a, #1a0d28); }
+    .sub-trip-header.indoor { background: linear-gradient(135deg, #1b3a5c, #0d1b2a); }
+
+    .sub-trip-header span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .sub-trip-header h3 {
+      font-size: 1.1rem;
+      color: var(--white);
+    }
+
+    .sub-trip-body {
+      padding: 1.25rem 1.5rem;
+    }
+
+    .sub-trip-body p {
+      font-size: 0.88rem;
+      color: var(--grey-text);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .sub-trip-points {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .sub-trip-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .sub-trip-point::before {
+      content: '→';
+      color: var(--gold);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* Comparison table */
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin-top: 1.5rem;
+    }
+
+    .comparison-table th {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.85rem 1.25rem;
+      text-align: left;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .comparison-table th:first-child { border-radius: 8px 0 0 0; }
+    .comparison-table th:last-child { border-radius: 0 8px 0 0; }
+
+    .comparison-table td {
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid #edf0f3;
+      color: var(--text);
+      vertical-align: top;
+    }
+
+    .comparison-table tr:last-child td { border-bottom: none; }
+    .comparison-table tr:nth-child(even) td { background: var(--grey-light); }
+
+    .comparison-table .feature-col { font-weight: 600; color: var(--navy); }
+
+    .check { color: #27ae60; font-size: 1.1rem; }
+    .cross { color: #e74c3c; font-size: 1.1rem; }
+
+    @media (max-width: 768px) {
+      .included-grid { grid-template-columns: 1fr; }
+      .sub-trips { grid-template-columns: 1fr; }
+      .trip-detail-header { flex-direction: column; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION ==================== -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">First <span>Track</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="trips.html" class="active">Our Trips</a></li>
+        <li><a href="destinations.html">Destinations</a></li>
+        <li><a href="contact.html" class="nav-cta">Get in Touch</a></li>
+      </ul>
+      <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="trips.html" class="active">Our Trips</a>
+      <a href="destinations.html">Destinations</a>
+      <a href="contact.html">Get in Touch</a>
+    </div>
+  </nav>
+
+  <!-- ==================== PAGE HERO ==================== -->
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <span class="section-label">Our Trips</span>
+      <h1>Two trip types. One standard of progression.</h1>
+      <p>School trips built for curriculum, compliance, and confidence — and progression trips built for individuals who want to genuinely improve on snow. Both delivered to the same exacting standard.</p>
+    </div>
+  </div>
+
+  <!-- ==================== TRIPS OVERVIEW NAV ==================== -->
+  <div class="trips-overview">
+    <div class="container">
+      <div class="trips-nav">
+        <a href="#school" class="trip-tab school">🏫 School Ski Trips</a>
+        <a href="#progression" class="trip-tab progression">🎿 Progression Trips</a>
+      </div>
+      <div class="section-header" style="margin-bottom: 0;">
+        <p style="max-width: 680px; font-size: 1.02rem;">First Track offers two distinct programmes. Use the links above to jump straight to the one that fits you, or scroll through to understand both — many families choose to combine pre-trip indoor preparation with an Alpine progression week regardless of which programme they select.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== SCHOOL TRIPS ==================== -->
+  <section class="trip-detail" id="school">
+    <div class="container anchor-offset">
+      <div class="trip-detail-header">
+        <span class="trip-detail-badge badge-school">Schools &amp; Groups</span>
+        <div class="trip-detail-title">
+          <h2>School Ski Trips</h2>
+          <p>Fully managed, week-long programmes combining lodge accommodation, structured ski instruction, lift passes, transfers, and evening activities — tailored to your school's curriculum and budget. Delivered compliantly and professionally, every time.</p>
+        </div>
+      </div>
+
+      <div class="included-grid">
+        <div>
+          <h3 style="font-size: 1.15rem; color: var(--navy); margin-bottom: 1.25rem;">What's included</h3>
+          <div class="included-list">
+            <div class="included-item">
+              <div class="included-icon">🏠</div>
+              <div class="included-text">
+                <h4>Lodge accommodation</h4>
+                <p>En-suite rooms in handpicked alpine lodges, with full board and a structured evening programme. Lovell Camp &amp; Academy in Gstaad is our flagship school partner.</p>
+              </div>
+            </div>
+            <div class="included-item">
+              <div class="included-icon">⛷️</div>
+              <div class="included-text">
+                <h4>Structured ski instruction</h4>
+                <p>Up to 5 hours of instruction per day with English-speaking, qualified instructors. Groups are ability-banded and given daily objectives — not just pointed down the mountain.</p>
+              </div>
+            </div>
+            <div class="included-item">
+              <div class="included-icon">🎫</div>
+              <div class="included-text">
+                <h4>Lift passes</h4>
+                <p>Full-area lift passes for the duration of the trip, included in the all-in package price.</p>
+              </div>
+            </div>
+            <div class="included-item">
+              <div class="included-icon">🚌</div>
+              <div class="included-text">
+                <h4>Transfers &amp; transport</h4>
+                <p>Airport-to-lodge transfers arranged and managed. We work with partners who have their own minibus fleets and established transfer networks.</p>
+              </div>
+            </div>
+            <div class="included-item">
+              <div class="included-icon">🌙</div>
+              <div class="included-text">
+                <h4>Evening activities</h4>
+                <p>A structured après-ski programme — swimming, ice-skating, climbing, and cultural activities — keeping pupils engaged and well-supervised after the slopes close.</p>
+              </div>
+            </div>
+            <div class="included-item">
+              <div class="included-icon">📋</div>
+              <div class="included-text">
+                <h4>Parent communications</h4>
+                <p>Templates, parent letters, and information packs to make the school's internal process as smooth as possible.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="trip-aside">
+          <div class="aside-card">
+            <h4>At a Glance</h4>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Duration</span>
+              <span class="aside-stat-value">1 week (typically)</span>
+            </div>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Target age</span>
+              <span class="aside-stat-value">School year groups</span>
+            </div>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Instruction</span>
+              <span class="aside-stat-value">Up to 5 hrs/day</span>
+            </div>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Group size</span>
+              <span class="aside-stat-value">TBC with school</span>
+            </div>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Teacher free places</span>
+              <span class="aside-stat-value">1:10 (air) / 1:8 (coach)</span>
+            </div>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Support</span>
+              <span class="aside-stat-value">24/7 in-resort &amp; UK</span>
+            </div>
+          </div>
+
+          <div class="aside-highlight">
+            <h4>Compliance you can show governors</h4>
+            <p>We operate on the STF/LOtC pathway. The DfE-endorsed LOtC Quality Badge means our H&amp;S systems have been independently audited — removing the need for schools to re-audit us.</p>
+            <p style="margin-bottom: 0;">Risk assessments, insurance certificates, and safeguarding documentation available for school review on request.</p>
+          </div>
+
+          <div class="aside-card">
+            <h4>Destinations</h4>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Premium / flagship</span>
+              <span class="aside-stat-value">Gstaad, Switzerland</span>
+            </div>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Mid-range options</span>
+              <span class="aside-stat-value">France &amp; Austria</span>
+            </div>
+            <div class="aside-stat-row">
+              <span class="aside-stat-label">Budget-friendly</span>
+              <span class="aside-stat-value">Italy (Aosta Valley)</span>
+            </div>
+          </div>
+
+          <a href="contact.html" class="btn btn-navy" style="text-align: center;">Enquire About a School Trip →</a>
+        </div>
+      </div>
+
+      <!-- School trip safeguarding section -->
+      <div style="margin-top: 3rem; padding-top: 3rem; border-top: 1px solid #e0e5eb;">
+        <h3 style="font-size: 1.2rem; color: var(--navy); margin-bottom: 1.5rem;">Safety &amp; safeguarding</h3>
+        <div class="cards-grid" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="card" style="padding: 1.5rem;">
+            <div class="card-icon" style="width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 1rem;">🔍</div>
+            <h3 style="font-size: 0.95rem;">DBS-checked staff</h3>
+            <p style="font-size: 0.85rem;">All First Track staff and in-resort supervisors are DBS cleared.</p>
+          </div>
+          <div class="card" style="padding: 1.5rem;">
+            <div class="card-icon" style="width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 1rem;">📄</div>
+            <h3 style="font-size: 0.95rem;">Written safeguarding policy</h3>
+            <p style="font-size: 0.85rem;">Child protection policy available for school review before booking.</p>
+          </div>
+          <div class="card" style="padding: 1.5rem;">
+            <div class="card-icon" style="width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 1rem;">📞</div>
+            <h3 style="font-size: 0.95rem;">24/7 emergency contact</h3>
+            <p style="font-size: 0.85rem;">Both in-resort and UK-based emergency contacts for all school groups.</p>
+          </div>
+          <div class="card" style="padding: 1.5rem;">
+            <div class="card-icon" style="width: 44px; height: 44px; font-size: 1.2rem; margin-bottom: 1rem;">🛡️</div>
+            <h3 style="font-size: 0.95rem;">£5M+ liability cover</h3>
+            <p style="font-size: 0.85rem;">Public liability and professional indemnity insurance in place prior to first booking.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROGRESSION TRIPS ==================== -->
+  <section class="trip-detail alt" id="progression">
+    <div class="container anchor-offset">
+      <div class="trip-detail-header">
+        <span class="trip-detail-badge badge-progression">Teens &amp; Adults</span>
+        <div class="trip-detail-title">
+          <h2>Progression Trips</h2>
+          <p>Small-group, intensive on-snow improvement programmes for motivated individuals who want to genuinely advance their skiing. Whether you're a teen looking to break through a plateau, an adult who trained at Skieasy and is ready for real snow, or a complete beginner who wants to learn properly — these trips are designed for you.</p>
+        </div>
+      </div>
+
+      <!-- Sub-trip panels -->
+      <div class="sub-trips">
+        <div class="sub-trip-card" id="teens">
+          <div class="sub-trip-header teens">
+            <span>For motivated young skiers</span>
+            <h3>Youth &amp; Teen Progression Weeks</h3>
+          </div>
+          <div class="sub-trip-body">
+            <p>Small-group, intensive on-snow improvement programmes for motivated teenage skiers. Built around daily skill assessment and a structured end-of-week progression review — so participants know exactly where they started, and how far they've come.</p>
+            <div class="sub-trip-points">
+              <div class="sub-trip-point">Small groups of motivated, similar-ability teens</div>
+              <div class="sub-trip-point">Daily skill objectives set and reviewed each evening</div>
+              <div class="sub-trip-point">End-of-week formal progression assessment</div>
+              <div class="sub-trip-point">Qualified English-speaking instruction throughout</div>
+              <div class="sub-trip-point">Structured lodge accommodation and supervision</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-trip-card" id="adults">
+          <div class="sub-trip-header adults">
+            <span>For adult learners &amp; improvers</span>
+            <h3>Adult Progression Trips</h3>
+          </div>
+          <div class="sub-trip-body">
+            <p>Curated group weeks for adult beginners and improvers. Particularly well-suited to clients of Skieasy (Chiswick) who have built indoor technique on the treadmill and are ready to translate that into real Alpine skiing.</p>
+            <div class="sub-trip-points">
+              <div class="sub-trip-point">Ideal for Skieasy graduates entering real snow</div>
+              <div class="sub-trip-point">Curated small-group format for focused improvement</div>
+              <div class="sub-trip-point">Structured week with daily coaching and review</div>
+              <div class="sub-trip-point">Social, supportive group atmosphere for adults</div>
+              <div class="sub-trip-point">Exclusive partner pathway for Skieasy clients</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sub-trip-card" style="grid-column: span 2;">
+          <div class="sub-trip-header indoor">
+            <span>Recommended add-on for all progression participants</span>
+            <h3>Pre-Trip Indoor Preparation — Skieasy, London</h3>
+          </div>
+          <div class="sub-trip-body">
+            <p>We strongly recommend that all progression trip participants — particularly beginners and early improvers — complete a block of Skieasy sessions before travelling to the Alps. Skieasy's revolving ski treadmill in Chiswick, London, allows participants to build muscle memory, learn to stop and turn, and arrive on snow with genuine foundations.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+              <div class="sub-trip-points">
+                <div class="sub-trip-point">Year-round, weatherproof indoor lessons</div>
+                <div class="sub-trip-point">1:1 instruction on a revolving ski treadmill</div>
+                <div class="sub-trip-point">Claims learning "up to 8x faster" than slopes</div>
+              </div>
+              <div class="sub-trip-points">
+                <div class="sub-trip-point">Mirrored walls for technique self-analysis</div>
+                <div class="sub-trip-point">Min age 4 (ski), 7 (snowboard)</div>
+                <div class="sub-trip-point">Bundled into First Track packages at a group rate</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Included for progression -->
+      <div style="margin-top: 3.5rem;">
+        <div class="included-grid">
+          <div>
+            <h3 style="font-size: 1.15rem; color: var(--navy); margin-bottom: 1.25rem;">What progression trips include</h3>
+            <div class="included-list">
+              <div class="included-item">
+                <div class="included-icon green">🏔️</div>
+                <div class="included-text">
+                  <h4>Lodge or hotel accommodation</h4>
+                  <p>Comfortable, well-located accommodation — chosen for proximity to terrain suited to intensive progression work.</p>
+                </div>
+              </div>
+              <div class="included-item">
+                <div class="included-icon green">⛷️</div>
+                <div class="included-text">
+                  <h4>Expert instruction — every day</h4>
+                  <p>Qualified, English-speaking instructors who understand progression goals, not just lesson delivery. Groups are ability-matched and size is kept small.</p>
+                </div>
+              </div>
+              <div class="included-item">
+                <div class="included-icon green">📊</div>
+                <div class="included-text">
+                  <h4>Daily assessment &amp; feedback</h4>
+                  <p>Each day ends with a skill review — what worked, what to focus on tomorrow, and how the group is progressing collectively.</p>
+                </div>
+              </div>
+              <div class="included-item">
+                <div class="included-icon green">🎫</div>
+                <div class="included-text">
+                  <h4>Lift passes &amp; transfers</h4>
+                  <p>Full-area passes and airport transfers included in the package price.</p>
+                </div>
+              </div>
+              <div class="included-item">
+                <div class="included-icon green">📝</div>
+                <div class="included-text">
+                  <h4>End-of-week progression review</h4>
+                  <p>A formal written progression review for each participant — what level they started at, what they achieved, and recommended next steps.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="trip-aside">
+            <div class="aside-card">
+              <h4>Progression Trips at a Glance</h4>
+              <div class="aside-stat-row">
+                <span class="aside-stat-label">Duration</span>
+                <span class="aside-stat-value">1 week</span>
+              </div>
+              <div class="aside-stat-row">
+                <span class="aside-stat-label">Age groups</span>
+                <span class="aside-stat-value">Teens &amp; adults</span>
+              </div>
+              <div class="aside-stat-row">
+                <span class="aside-stat-label">Group size</span>
+                <span class="aside-stat-value">Small groups</span>
+              </div>
+              <div class="aside-stat-row">
+                <span class="aside-stat-label">Instruction</span>
+                <span class="aside-stat-value">Daily, expert-led</span>
+              </div>
+              <div class="aside-stat-row">
+                <span class="aside-stat-label">Assessment</span>
+                <span class="aside-stat-value">Daily + end-of-week</span>
+              </div>
+              <div class="aside-stat-row">
+                <span class="aside-stat-label">Pre-trip prep</span>
+                <span class="aside-stat-value">Skieasy, London</span>
+              </div>
+            </div>
+
+            <div class="aside-highlight" style="background: linear-gradient(135deg, #1a3a2a, #0a2018);">
+              <h4>The Skieasy pathway</h4>
+              <p>First Track has an exclusive progression pathway for Skieasy clients. Train in London through the winter, book an Alps week with us in spring — and arrive knowing how to ski.</p>
+              <a href="destinations.html#skieasy" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.2rem;">About Skieasy →</a>
+            </div>
+
+            <a href="contact.html" class="btn btn-navy" style="text-align: center;">Enquire About a Progression Trip →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== COMPARISON ==================== -->
+  <section class="cards-section white-bg tight">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Quick Comparison</span>
+        <h2>Which trip is right for you?</h2>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>School Ski Trip</th>
+              <th>Progression Trip</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="feature-col">Who it's for</td>
+              <td>School year groups, UK &amp; international schools</td>
+              <td>Motivated teens &amp; adults, Skieasy graduates</td>
+            </tr>
+            <tr>
+              <td class="feature-col">Booking route</td>
+              <td>School/institution</td>
+              <td>Individual or parent</td>
+            </tr>
+            <tr>
+              <td class="feature-col">Lodge accommodation</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td class="feature-col">Structured instruction</td>
+              <td><span class="check">✓</span> Up to 5 hrs/day</td>
+              <td><span class="check">✓</span> Daily, expert-led</td>
+            </tr>
+            <tr>
+              <td class="feature-col">Lift passes &amp; transfers</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td class="feature-col">Evening activities</td>
+              <td><span class="check">✓</span> Full programme</td>
+              <td><span class="check">✓</span> Social, unstructured</td>
+            </tr>
+            <tr>
+              <td class="feature-col">Daily progression review</td>
+              <td><span class="cross">–</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td class="feature-col">End-of-week assessment</td>
+              <td><span class="cross">–</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td class="feature-col">Teacher free places</td>
+              <td><span class="check">✓</span> 1:10 or 1:8</td>
+              <td><span class="cross">–</span></td>
+            </tr>
+            <tr>
+              <td class="feature-col">Pre-trip indoor prep (Skieasy)</td>
+              <td><span class="check">✓</span> Optional add-on</td>
+              <td><span class="check">✓</span> Strongly recommended</td>
+            </tr>
+            <tr>
+              <td class="feature-col">STF/LOtC compliance</td>
+              <td><span class="check">✓</span> Full pathway</td>
+              <td><span class="cross">–</span> (not required)</td>
+            </tr>
+            <tr>
+              <td class="feature-col">Pricing approach</td>
+              <td>All-inclusive, per-pupil quote</td>
+              <td>Per-person group week</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA ==================== -->
+  <section class="cta-banner">
+    <div class="container">
+      <span class="section-label">Start Planning</span>
+      <h2>Ready to book, or just exploring?</h2>
+      <p>Get in touch and we'll help you find the right trip — whether you're a school planner, a parent, or booking for yourself.</p>
+      <div class="cta-actions">
+        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        <a href="destinations.html" class="btn btn-outline">View Destinations</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">First <span>Track</span></a>
+          <p>UK-based specialist organiser of ski progression trips for schools, youth groups, and adult learners across the Alps.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="trips.html">Our Trips</a></li>
+            <li><a href="destinations.html">Destinations</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Our Trips</h4>
+          <ul>
+            <li><a href="trips.html#school">School Ski Trips</a></li>
+            <li><a href="trips.html#progression">Progression Trips</a></li>
+            <li><a href="trips.html#teens">Youth &amp; Teen Weeks</a></li>
+            <li><a href="trips.html#adults">Adult Programmes</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:chanj38455@gmail.com">chanj38455@gmail.com</a></li>
+            <li><a href="tel:+447709232079">+44 7709 232079</a></li>
+            <li><a href="#">London, UK</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 First Track. Targeting launch: Winter 2026/27.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileNav() {
+      document.getElementById('mobileNav').classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
